@@ -9,6 +9,19 @@ class MovieContainer extends Component{
 		}
 	}
 	
+	componentDidMount(){
+		this.getAllMovies().then((res)=>{
+			this.setState({movies: res})})
+			.catch((err)=>{console.log(err)});
+		
+	}
+
+	getAllMovies = async () => {
+		const allMovies = await fetch('http://localhost:9000/api/v1/movies/');
+		const allMoviesJson = await allMovies.json();
+		return allMoviesJson.data;
+	}
+
 	addMovies = async (movie, e) =>{
 		e.preventDefault();
 		const newMovie = await fetch('http://localhost:9000/api/v1/movies/',{
